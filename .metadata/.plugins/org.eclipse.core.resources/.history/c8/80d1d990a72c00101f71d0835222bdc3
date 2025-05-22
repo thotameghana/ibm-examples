@@ -1,0 +1,17 @@
+package com.meghana;
+
+class One {
+	public One method() {
+		return this;
+	}
+}
+
+class Two extends One {
+	public Two method() {
+		return this;
+	}
+}
+
+public class Test extends Two {
+	// Expected Code Here
+}

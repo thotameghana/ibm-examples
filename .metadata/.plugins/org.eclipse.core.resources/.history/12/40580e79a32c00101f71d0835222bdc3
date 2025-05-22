@@ -1,0 +1,40 @@
+package com.meghana;
+
+import java.util.HashSet;
+import java.util.Objects;
+
+public class WrappedString {
+    private String s;
+
+    public WrappedString(String s) {
+        this.s = s;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        WrappedString that = (WrappedString) obj;
+        return Objects.equals(s, that.s);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(s);
+    }
+
+    public static void main(String[] args) {
+        HashSet<Object> hs = new HashSet<>();
+        WrappedString ws1 = new WrappedString("aardvark");
+        WrappedString ws2 = new WrappedString("aardvark");
+        String s1 = new String("aardvark");
+        String s2 = new String("aardvark");
+
+        hs.add(ws1);
+        hs.add(ws2);
+        hs.add(s1);
+        hs.add(s2);
+
+        System.out.println(hs.size());  // Output should be 2 if `equals()` and `hashCode()` are correctly implemented.
+    }
+}

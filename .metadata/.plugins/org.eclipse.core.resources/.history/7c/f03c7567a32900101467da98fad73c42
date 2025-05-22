@@ -1,0 +1,28 @@
+package com.project.business;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.project.dao.ProductRepository;
+import com.project.model.Product;
+
+@Service
+public class ProductService {
+    @Autowired
+    private ProductRepository productRepo;
+
+    public Product addProduct(Product product) {
+        return productRepo.save(product);
+    }
+
+    public Product updateProduct(Long id, Product updatedProduct) {
+        Product existing = productRepo.findById(id).orElseThrow();
+        existing.setPrice(updatedProduct.getPrice());
+        existing.setStockQuantity(updatedProduct.getStockQuantity());
+        return productRepo.save(existing);
+    }
+
+    public void deleteProduct(Long id) {
+        productRepo.deleteById(id);
+    }
+}

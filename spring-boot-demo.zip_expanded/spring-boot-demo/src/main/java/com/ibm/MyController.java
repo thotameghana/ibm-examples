@@ -1,0 +1,108 @@
+package com.ibm;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ibm.buisness.EmployeeService;
+import com.ibm.dao.EmployeeRepo;
+
+@RestController
+@RequestMapping("/api/employee" )
+@CrossOrigin(origins = "*")
+public class MyController {
+	@Autowired
+	private EmployeeService service;
+	@Autowired
+	private EmployeeRepo employeeRepo;
+	
+	@Value("${server.port}")
+	private int port;
+	@GetMapping(path = "/test/greet")
+	public ResponseEntity<Object> greet(){
+		return ResponseEntity.status(200).body("Microservicce running in "+port+" number");
+	}
+	/*
+	@GetMapping(path = "/testing")
+	public ResponseEntity<Object> greet(){
+		Map<String,Object> map=new HashMap<>();
+		
+		map.put("message", "welcome to rest API");
+		map.put("dataTime", LocalDateTime.now());
+		
+		return ResponseEntity.status(200).body(map);
+	}
+	*/
+	
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> save(@RequestBody Employee employee){
+//		Map<String, Object> map=new HashMap<String, Object>();
+//		map.put("message", "Employee "+employee.getName()+" is processed");
+//		map.put("emp", employee);
+		
+		Employee savedEntity=service.saveOrUpdate(employee);
+		System.out.println(savedEntity);
+		return ResponseEntity.status(201).body(savedEntity);
+	}
+	
+	@GetMapping
+	public ResponseEntity<Object> find(){
+		List<Employee> list = service.findEmployees();
+//		return ResponseEntity.status(200).body(list);
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping(path="/{id}")//it can accept any value like 100, 101....
+	public ResponseEntity<Object> get(@PathVariable("id") int empId){
+		try {
+			Employee emp=service.findEmployee(empId);
+			return ResponseEntity.status(200).body(emp);
+		}
+		catch(Exception e) {
+			Map<String, String> errorMap= new HashMap<String,String>();
+			errorMap.put("message", e.getMessage());
+			return ResponseEntity.status(404).body(errorMap);
+		}
+	}
+	
+	@GetMapping(path="/name/{name}")
+	public ResponseEntity<Object> get(@PathVariable("name") String name){
+		List<Employee> e=employeeRepo.findAllByName(name);
+//		return ResponseEntity.status(200).body(e);
+		return ResponseEntity.ok(e);
+	}
+	
+	@DeleteMapping(path = "/{id}")
+	public ResponseEntity<Object> delete(@PathVariable("id") int id) {
+		try {
+			service.deleteEmployee(id);
+			return ResponseEntity.status(200).body("Succesfully deleted");
+		}
+		catch(Exception e) {
+			Map<String,String> errorMap=new HashMap<>();
+			errorMap.put("message", e.getMessage());
+			return ResponseEntity.status(404).body(errorMap);
+		}
+	}
+	
+	@PutMapping(path="/{id}" ,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> update(@PathVariable("id") int id, @RequestBody Employee e){
+		e.setId(id);
+		Employee updatedEmployee = service.saveOrUpdate(e);
+		return ResponseEntity.status(200).body(updatedEmployee);
+	}
+}

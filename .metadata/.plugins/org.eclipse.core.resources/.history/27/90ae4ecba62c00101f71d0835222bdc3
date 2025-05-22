@@ -1,0 +1,19 @@
+package com.meghana;
+
+import java.util.ArrayList;
+import java.util.List;
+
+interface A {
+	void method();
+}
+
+class Test {
+	public void method() {
+		System.out.println("call from a method");
+	}
+
+	public static void main(String[] args) {
+		A a = (A) new Test();
+		a.method();
+	}
+}

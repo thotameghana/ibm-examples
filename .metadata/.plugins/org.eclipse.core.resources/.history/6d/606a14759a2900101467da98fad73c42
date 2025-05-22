@@ -1,0 +1,9 @@
+package com.project.model;
+
+public enum RequestType {
+    ADD, UPDATE, DELETE;
+}
+
+public enum RequestStatus {
+    PENDING, APPROVED, REJECTED;
+}

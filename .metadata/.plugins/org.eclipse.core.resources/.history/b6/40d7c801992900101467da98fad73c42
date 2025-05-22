@@ -1,0 +1,88 @@
+package com.project.model;
+
+import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Request {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long requestId;
+    private int empId;
+    private int itemId;
+    private String RequestType;
+    private String status;
+    private LocalDate craeted_at;
+ 
+    public Request() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Request(Long requestId, int empId, int itemId, String requestType, String status, LocalDate craeted_at) {
+		super();
+		this.requestId = requestId;
+		this.empId = empId;
+		this.itemId = itemId;
+		RequestType = requestType;
+		this.status = status;
+		this.craeted_at = craeted_at;
+	}
+
+	public Long getRequestId() {
+		return requestId;
+	}
+
+	public void setRequestId(Long requestId) {
+		this.requestId = requestId;
+	}
+
+	public int getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
+	public String getRequestType() {
+		return RequestType;
+	}
+
+	public void setRequestType(String requestType) {
+		RequestType = requestType;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public LocalDate getCraeted_at() {
+		return craeted_at;
+	}
+
+	public void setCraeted_at(LocalDate craeted_at) {
+		this.craeted_at = craeted_at;
+	}
+
+	@Override
+	public String toString() {
+		return "Request [requestId=" + requestId + ", empId=" + empId + ", itemId=" + itemId + ", RequestType="
+				+ RequestType + ", status=" + status + ", craeted_at=" + craeted_at + "]";
+	}
+    
+}

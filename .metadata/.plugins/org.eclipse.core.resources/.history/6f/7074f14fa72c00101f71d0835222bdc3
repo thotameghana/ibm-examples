@@ -1,0 +1,20 @@
+package com.meghana;
+
+import java.util.ArrayList;
+import java.util.List;
+
+abstract class MyClass {
+	abstract int m();
+}
+
+interface MyInterface {
+	public int m();
+}
+
+public class Test extends MyClass implements MyInterface {
+	// code to execute
+	public int m(){
+		return 0;
+		
+	}
+}

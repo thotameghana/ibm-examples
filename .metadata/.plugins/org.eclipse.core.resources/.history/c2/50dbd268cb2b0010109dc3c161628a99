@@ -1,0 +1,31 @@
+package com.meghana;
+
+
+public class Test {
+    public static void main(String[] args) {
+        A a = null;
+        a.method();
+    }
+}
+class A {
+    static void method() {
+        System.out.println("Static method in A");
+    }
+}
+class B extends A {
+    static void method() {
+        System.out.println("Static method in B");
+    }
+}
+
+
+
+
+
+
+
+public class Test{
+	public static void main(String[] args) {
+		
+	}
+}

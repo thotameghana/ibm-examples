@@ -1,0 +1,21 @@
+package com.meghana;
+
+
+public class Test {
+    public static void main(String[] args) {
+    	try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+}
+class A {
+    static void method() {
+        System.out.println("Static method in A");
+    }
+    void method1() {
+    	System.out.println("A");
+    }
+}

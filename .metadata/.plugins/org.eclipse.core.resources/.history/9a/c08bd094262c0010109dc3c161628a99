@@ -1,0 +1,17 @@
+package com.meghana;
+
+import java.sql.Connection;
+
+public class Test {
+    public static void main(String[] args) {
+    	
+    }
+}
+class A {
+    static void method() {
+        System.out.println("Static method in A");
+    }
+    void method1() {
+    	System.out.println("A");
+    }
+}

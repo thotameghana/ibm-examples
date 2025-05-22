@@ -1,0 +1,23 @@
+package com.project.business;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.project.dao.EmployeeRepository;
+import com.project.model.Employees;
+
+@Service
+public class EmployeeService {
+    @Autowired 
+    private EmployeeRepository employeeRepo;
+
+    public Employees addEmployee(Employees employee) {
+        employee.setPassword("welcome123"); // Default password
+        return employeeRepo.save(employee);
+    }
+
+    public void deleteEmployee(Long id) {
+        employeeRepo.deleteById(id);
+    }
+    
+}

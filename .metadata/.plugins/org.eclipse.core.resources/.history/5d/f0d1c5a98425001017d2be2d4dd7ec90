@@ -1,0 +1,18 @@
+package com.meghana;
+
+import static java.lang.System.*;
+
+public class Test {
+	public static void main(String[] args) {
+		String s = null;
+		try {
+			int length = s.length();
+			System.exit(0);
+//		} catch (NullPointerException e) {
+//			System.out.println("NullPointerException caught");
+		} finally {
+			System.out.println("Finally block executed");
+		}
+
+	}
+}

@@ -1,0 +1,15 @@
+package com.meghana;
+class Test {
+	public static void main(String[] args) {
+		for (int i = 0; i < 3; i++) {
+            switch (i) {
+                case 0:
+                case 1:
+                    System.out.print(i + " ");
+//                    break;
+                default:
+                    System.out.print("Default ");
+            }
+        }
+	}
+}

@@ -1,0 +1,19 @@
+package com.meghana;
+class Test {
+    static int a = 10;
+    static {
+        System.out.println("Static Block: " + a);
+        a = 20;
+    }
+    public static void main(String[] args) {
+        System.out.println("Main: " + a);
+    }
+}
+
+//
+//public class Test {
+//    public static void main(String[] args) {
+//    	String s=null;
+//    	System.out.println(s.isEmpty());
+//    }
+//}

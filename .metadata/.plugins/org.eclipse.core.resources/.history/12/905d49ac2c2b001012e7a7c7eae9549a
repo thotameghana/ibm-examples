@@ -1,0 +1,27 @@
+package com.meghana;
+
+//Custom Exception Class
+class OurCreatedException extends Exception {
+ OurCreatedException() {
+     super("Custom Exception: Name is null!");
+ }
+}
+
+//Class with method throwing the exception
+class XYZ {
+ public static void method(String name) throws OurCreatedException {
+     if (name == null) {
+         throw new OurCreatedException();
+     } else {
+         System.out.println("Welcome " + name);
+     }
+ }
+}
+
+//Main Class with Proper Exception Handling
+public class Test {
+ public static void main(String[] args) {
+    int[] a= {1,2,3,4};
+    System.out.println(a[-1]);
+ }
+}

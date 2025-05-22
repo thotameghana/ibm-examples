@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Employee.java&apos; to &apos;spring-second-app/src/main/java/com.ibm.dao&apos;&#x0D;&#x0A;- Original project: &apos;JDBC_demo&apos;&#x0D;&#x0A;- Destination element: &apos;spring-second-app/src/main/java/com.ibm.dao&apos;&#x0D;&#x0A;- Original element: &apos;com.ibm.Employee.java&apos;" description="Copy compilation unit" destination="=spring-second-app/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.ibm.dao" element1="/src=/optional=/true=/=/maven.pomderived=/true=/&lt;com.ibm{Employee.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1745301715114" units="1" version="1.0"/>
+</session>

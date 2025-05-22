@@ -1,0 +1,15 @@
+package com.meghana;
+
+import java.io.ByteArrayInputStream;
+import java.util.Arrays;
+
+class Test {
+	public static void main(String[] args) {
+		String obj = "abc";
+		 byte b[] = obj.getBytes();
+		 System.out.println(Arrays.toString(b));
+		 ByteArrayInputStream obj1 = new ByteArrayInputStream(b);
+		 System.out.println((char)obj1.read());
+	}
+
+}

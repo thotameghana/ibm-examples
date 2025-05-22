@@ -1,0 +1,11 @@
+package com.meghana;
+class Parent {}
+
+class Child extends Parent {}
+
+public class Test {
+    public static void main(String[] args) {
+        Parent obj = new Child();
+        System.out.println(obj instanceof Parent);
+    }
+}

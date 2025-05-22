@@ -1,0 +1,77 @@
+package com.ibm;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+public class TestGreetings {
+	/*
+	 * @Test methos will have test cases
+	 * they can be executed with run junit option
+	 */
+//	@Test
+//	public void test_test() {
+//		System.out.println("Test_Test is working");
+//	}
+	
+	private Greetings greet;
+	@BeforeEach
+	public void setUp() {
+		System.out.println("setUp()");
+		greet= new Greetings();
+	}
+	@AfterEach
+	public void tearDown() {
+		System.out.println("tearDown()");
+		greet=null;
+	}
+	@Test
+	public void test_welcome() {
+		String actual=greet.welcome("meghana");
+		String expected="Welcome meghana";
+		assertEquals(expected, actual);
+		System.out.println("Test_welcome");
+	}
+	@Test
+	public void test_isEven() {
+		boolean isEven=greet.isEven(2);
+		assertTrue(isEven);
+		System.out.println("test_isEven");
+	}
+	@Test
+	public void test_isUpper() {
+		String actual=greet.welcomeUpperCase("meghana");
+		String expected="WELCOME MEGHANA";
+		assertEquals(actual,expected);
+		System.out.println("test_isUpper");
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints= {2,4,6,8})
+	public void test_isEvenMultipleTimes(int num) {
+		assertTrue(greet.isEven(num));
+	}
+	
+	@BeforeAll
+	public static void test_upper() {
+		String actual=greet.welcomeUpperCase("meghana");
+		String expected="WELCOME MEGHANA";
+		assertEquals(actual, expected);
+		System.out.println("test_upper-- BEFORE ALL--");
+	}
+	@AfterAll
+	public void test_upper2() {
+		String actual=greet.welcomeUpperCase("meghana");
+		String expected="WELCOME MEGHANA";
+		assertEquals(actual, expected);
+		System.out.println("test_upper2 -- AFTER ALL--");
+	}
+	
+}

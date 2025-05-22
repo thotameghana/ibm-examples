@@ -1,0 +1,13 @@
+package com.meghana;
+
+class Test extends Thread {
+    @Override
+    public void run() {
+        System.out.println("Thread is running...");
+    }
+
+    public static void main(String[] args) {
+    		Thread t = new Thread();
+    		System.out.println(t.currentThread().getPriority());
+    }
+}

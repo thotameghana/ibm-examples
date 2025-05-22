@@ -1,0 +1,15 @@
+package com.meghana;
+
+import static java.lang.System.*;
+
+public class Test {
+	public static void main(String[] args) {
+		int a=5;
+		int b=10;
+		
+		System.out.println(a++ + b++);
+		
+		System.out.println(a+"  "+b);
+
+	}
+}

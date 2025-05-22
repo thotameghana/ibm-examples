@@ -1,0 +1,14 @@
+package com.meghana;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Test {
+    public static void main(String[] args) {
+    	 List<Object> list = new ArrayList<String>();/*error at line 3*/
+    	 list.add("test");/*error at line 4*/
+    	 list.add(new Integer(1));/*error at line 5*/
+    	 list.add(new Double(1.23223));/*error at line 6*/
+    	 list.add(12.3f);/*error at line 7*/
+	}
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- 
+	<bean id="ds" class="com.ibm.DataSource">
+		<property name="userName" value="Meghana"></property>
+		<property name="password" value="meghana@123"></property>
+	</bean>
+	
+	<bean id="ds2" class="com.ibm.DataSource">
+		Instead of name we can use index also and without using name and index also it will work
+		<constructor-arg name="userName" value="root"></constructor-arg>
+		<constructor-arg name="password" value="root@123"></constructor-arg>
+	</bean>
+
+	<bean id="accountdao" class="com.ibm.AccountDao1">
+		<property name="dataSource" ref="ds"></property>
+	</bean>
+	
+	<bean id="test" class="com.ibm.Test" init-method="init" destroy-method="cleanUp"></bean>
+	<bean id="test2" class="com.ibm.Test2"></bean>
+	
+	<bean id="locations" class="com.ibm.Locations" >
+		<property name="cities">
+			<list>
+				<value>Banglore</value>
+				<value>Mumbai</value>
+				<value>Tirupathi</value>
+			</list>
+			
+		</property>
+	</bean>
+	<bean id="l" class="com.ibm.Locations">
+		<constructor-arg name="cities">
+			<list>
+				<value>Pune</value>
+				<value>Delhi</value>
+				<value>Mysore</value>
+			</list>
+		</constructor-arg>
+	</bean>
+</beans> -->

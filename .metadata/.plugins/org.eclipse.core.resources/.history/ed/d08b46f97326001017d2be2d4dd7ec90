@@ -1,0 +1,23 @@
+package com.meghana;
+
+import static java.lang.System.*;
+
+
+class Parent {
+    public void show() throws Exception {
+        System.out.println("Parent");
+    }
+}
+
+class Child extends Parent {
+    @Override
+    public void show() {
+        System.out.println("Child");
+    }
+}
+
+public class Test {
+	Parent obj = new Child();
+    obj.show();
+	}
+}

@@ -1,0 +1,140 @@
+package com.meghana;
+
+
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputFilter;
+import java.io.ObjectInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import org.securecodewarrior.image_storage.dao.AccountDAO;
+import org.securecodewarrior.image_storage.dao.DataDAO;
+import org.securecodewarrior.image_storage.exception.BusinessLogicException;
+import org.securecodewarrior.image_storage.model.Data;
+import org.securecodewarrior.image_storage.model.Response;
+import org.securecodewarrior.image_storage.util.Cryptor;
+import org.securecodewarrior.image_storage.util.PasswordHash;
+
+public class Test {
+
+    private final DataDAO dataDAO = new DataDAO();
+    private final AccountDAO accountDAO = new AccountDAO();
+    private final PasswordHash passwordHash = new PasswordHash();
+    private static final String UTILS_PATH = System.getProperty("user.dir")
+            + "/utils/";
+    private static final String XML_PATH = System.getProperty("user.dir")
+            + "/xml/";
+    private static final String SERIALIZED_PATH = System.getProperty("user.dir")
+            + "/serialized/";
+
+    public void saveData(Long currentUserId, String address, String email,
+                         String phoneNumber, char[] secret, char[] password)
+            throws BusinessLogicException {
+
+        if (dataDAO.existsByAccountId(currentUserId)) {
+            throw new BusinessLogicException("You already have personal data");
+        }
+
+        Cryptor cryptor = Cryptor.getInstance();
+        String salt = passwordHash.getSalt();
+        String username = accountDAO.getUsernameById(currentUserId);
+        Data data = new Data();
+        data.setAccountId(currentUserId);
+        data.setPassword(passwordHash.getHashedPassword(password, salt));
+        data.setSalt(salt);
+        data.setAddress(cryptor.encrypt(address, username, secret));
+        data.setEmail(cryptor.encrypt(email, username, secret));
+        data.setPhoneNumber(cryptor.encrypt(phoneNumber, username, secret));
+        data.setExternalId(getExternalId(currentUserId));
+        dataDAO.save(data);
+    }
+
+    public void printToPDF(Long currentUserId, char[] secret, char[] password)
+            throws BusinessLogicException {
+
+        if (!dataDAO.existsByAccountId(currentUserId)) {
+            throw new BusinessLogicException("You have no saved personal data");
+        }
+
+        Data data = dataDAO.getByAccountId(currentUserId);
+        String salt = data.getSalt();
+
+        if (!dataDAO.existsByAccountIdAndPassword(currentUserId,
+                passwordHash.getHashedPassword(password, salt))) {
+            throw new BusinessLogicException("Wrong security password!");
+        }
+
+        try {
+            Runtime.getRuntime().exec(getCommand(secret, data));
+        }
+        catch (IOException exception) {
+            throw new BusinessLogicException("Could not find PDFPrinter");
+        }
+    }
+
+    private String[] getCommand(char[] secret, Data data)
+            throws BusinessLogicException {
+        Cryptor cryptor = Cryptor.getInstance();
+        String username = accountDAO.getUsernameById(data.getAccountId());
+
+        String text = "Account ID: " + data.getAccountId()
+                + "\nExternal ID: " + data.getExternalId()
+                + "\nAddress: " + cryptor.decrypt(data.getAddress(), username, secret)
+                + "\nEmail: " + cryptor.decrypt(data.getEmail(), username, secret)
+                + "\nPhone Number: " + cryptor.decrypt(
+                data.getPhoneNumber(), username, secret);
+        String[] command = {
+                UTILS_PATH + "PDFPrinter ",
+                text
+        };
+        return command;
+    }
+
+    private String getExternalId(Long currentUserId)
+            throws BusinessLogicException {
+        String username = accountDAO.getUsernameById(currentUserId);
+        String filePath = XML_PATH + username + ".xml";
+        if (!Files.exists(Path.of(filePath))) {
+            return getExternalIdSerialized(currentUserId);
+        }
+
+        try (
+                FileInputStream fileReader = new FileInputStream(filePath);
+        ) {
+
+            XmlMapper xmlMapper = new XmlMapper();
+            ObjectReader responseReader = xmlMapper.readerFor(Response.class);
+            Response response = responseReader.readValue(fileReader);
+
+            return response.getExternalId();
+        } catch (IOException exception) {
+            throw new BusinessLogicException("Could not save data", exception);
+        }
+    }
+
+    private String getExternalIdSerialized(Long currentUserId)
+            throws BusinessLogicException {
+        String username = accountDAO.getUsernameById(currentUserId);
+        String filePath = SERIALIZED_PATH + username + ".xml";
+
+        try (
+                FileInputStream fileReader = new FileInputStream(filePath);
+                ObjectInputStream objectStream = new ObjectInputStream(fileReader)
+        ) {
+            objectStream.setObjectInputFilter(stream -> (
+                    stream.serialClass() != null
+                            && stream.serialClass().getName().equals("org.securecodewarrior.image_storage.model.Response"))
+                    ? ObjectInputFilter.Status.UNDECIDED
+                    : ObjectInputFilter.Status.REJECTED);
+
+            Response response = (Response) objectStream.readObject();
+
+            return response.getExternalId();
+        } catch (IOException | ClassNotFoundException exception) {
+            throw new BusinessLogicException("Could not save data", exception);
+        }
+    }
+}

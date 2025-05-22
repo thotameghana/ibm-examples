@@ -1,0 +1,25 @@
+package com.project.business;
+
+import org.springframework.stereotype.Service;
+
+import com.project.dao.EmployeeRepository;
+import com.project.dao.RequestRepository;
+import com.project.model.Employees;
+import com.project.model.Requests;
+
+@Service
+public class RequestService {
+	 private final RequestRepository requestRepo;
+	    private final EmployeeRepository employeeRepo;
+
+	    public RequestService(RequestRepository requestRepo, EmployeeRepository employeeRepo) {
+	        this.requestRepo = requestRepo;
+	        this.employeeRepo = employeeRepo;
+	    }
+
+	    public Requests sendRequest(Long employeeId, String description) {
+	        Employees employee = employeeRepo.findById(employeeId).orElseThrow();
+	        Requests request = new Requests(employee, description);
+	        return requestRepo.save(request);
+	    }
+}

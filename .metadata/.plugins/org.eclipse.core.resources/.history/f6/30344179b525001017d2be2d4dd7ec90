@@ -1,0 +1,14 @@
+package com.meghana;
+
+import static java.lang.System.*;
+
+public class Test {
+	 static {
+	        System.out.println("Static Block");
+	    }
+
+	    public static void main(String[] args) throws ClassNotFoundException {
+	        Class.forName("Test");
+	        System.out.println("Main Method");
+	    }
+}

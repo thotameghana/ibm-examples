@@ -1,0 +1,12 @@
+package com.meghana;
+
+import static java.lang.System.*;
+
+public class Test {
+	public static void main(String[] args) {
+		int x=0;
+		while(x++ < 3) {
+			System.out.println(x);
+		}
+	}
+}

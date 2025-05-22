@@ -1,0 +1,22 @@
+package com.meghana;
+
+class Test {
+    private int x = 10;
+    class Inner {
+        public void display() {
+            System.out.println(x);
+        }
+    }
+    public static void main(String[] args) {
+        Test o = new Test();
+        Test.Inner i = o.new Inner();
+        i.display();
+    }
+}
+//
+//public class Test {
+//    public static void main(String[] args) {
+//    	String s=null;
+//    	System.out.println(s.isEmpty());
+//    }
+//}
